@@ -31,6 +31,17 @@ public final class PasswordHasher {
             byte[] salt = Base64.getDecoder().decode(saltBase64); // Decode salt daripada Base64
             PBEKeySpec spec = new PBEKeySpec(password, salt, ITERATIONS, KEY_LENGTH);
                 password, salt, ITERATIONS, KEY_BITS);
+
+                try {
+                SecretKeyFactory factory = SecretKeyFactory.getInstance(
+                        "PBKDF2WithHmacSHA256");
+                byte[] result = factory.generateSecret(keySpec).getEncoded();
+                return Base64.getEncoder().encodeToString(result);
+            } finally {
+                keySpec.clearPassword();
+            }
+        } catch (GeneralSecurityException | IllegalArgumentException ex) {
+            throw new IllegalStateException("Unable to hash password.", ex);
         }
     }
 
