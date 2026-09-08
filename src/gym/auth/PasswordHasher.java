@@ -9,5 +9,17 @@ import java.crypto.spec.PBEKeySpec; //utk simpan pass n setting tuk encrypt
 
 public final class PasswordHasher {
     public static final int ITERATIONS = 120_000; // total iteration untuk secure password
+    public static final int KEY_LENGTH = 256; // panjang key untuk secure password
+    private static final SecureRandom random = new SecureRandom();
+
+    private PasswordHasher() {
+        // private constructor to prevent instantiation
+    }
+
+    public static String newSalt() {
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        return Base64.getEncoder().encodeToString(salt);
+    }
 
 }
