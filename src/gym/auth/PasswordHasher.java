@@ -35,13 +35,13 @@ public final class PasswordHasher {
                 try {
                 SecretKeyFactory factory = SecretKeyFactory.getInstance(
                         "PBKDF2WithHmacSHA256");
-                byte[] result = factory.generateSecret(keySpec).getEncoded();
-                return Base64.getEncoder().encodeToString(result);
+                byte[] result = factory.generateSecret(keySpec).getEncoded(); // Generate hashed password
+                return Base64.getEncoder().encodeToString(result); // Convert hashed password to Base64
             } finally {
-                keySpec.clearPassword();
+                keySpec.clearPassword(); // Clear password daripada memory
             }
         } catch (GeneralSecurityException | IllegalArgumentException ex) {
-            throw new IllegalStateException("Unable to hash password.", ex);
+            throw new IllegalStateException("Unable to hash password.", ex); // Kalau ada error masa hashing, throw error
         }
     }
 
