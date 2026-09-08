@@ -22,4 +22,12 @@ public final class PasswordHasher {
         return Base64.getEncoder().encodeToString(salt);
     }
 
+    public static String hash(char[] password, String saltBase64) {
+        if (password == null || password.length == 0) { // Check password sebelum proses hashing
+            throw new IllegalArgumentException("Password is required.");
+        }
+        
+
+    }
+
 }
