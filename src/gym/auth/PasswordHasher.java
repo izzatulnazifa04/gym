@@ -6,3 +6,8 @@ import java.security.SecureRandom; //generate random salt
 import java.util.Base64; //decode/decode
 import java.crypto.SecretKeyFactory; //generate secret code
 import java.crypto.spec.PBEKeySpec; //utk simpan pass n setting tuk encrypt
+
+public final class PasswordHasher {
+    public static final int ITERATIONS = 120_000; // total iteration untuk secure password
+
+}
