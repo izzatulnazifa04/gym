@@ -45,4 +45,18 @@ public final class PasswordHasher {
         }
     }
 
+    public static boolean matches(char[] password, String expectedHash,String saltBase64) {
+        if (password == null || expectedHash == null || saltBase64 == null) {
+            return false;
+        }
+
+        try {
+            byte[] expected = Base64.getDecoder().decode(expectedHash);
+            byte[] actual = Base64.getDecoder().decode(hash(password, saltBase64));
+            return MessageDigest.isEqual(expected, actual);
+        } catch (IllegalArgumentException ex) {
+            return false;
+        }
+    }
+
 }
