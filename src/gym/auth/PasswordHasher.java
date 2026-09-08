@@ -27,7 +27,11 @@ public final class PasswordHasher {
             throw new IllegalArgumentException("Password is required.");
         }
         
-
+        try {
+            byte[] salt = Base64.getDecoder().decode(saltBase64); // Decode salt daripada Base64
+            PBEKeySpec spec = new PBEKeySpec(password, salt, ITERATIONS, KEY_LENGTH);
+                password, salt, ITERATIONS, KEY_BITS);
+        }
     }
 
 }
