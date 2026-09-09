@@ -58,7 +58,6 @@ public final class PasswordHasher {
             return false;
         }
 
-        test
     }
     
 }
