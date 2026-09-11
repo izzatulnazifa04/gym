@@ -43,5 +43,14 @@ public final class AuthRepository {
             statement.execute(sql);
         }
     }
+    
+    private Connection connect() throws SQLException {
+        String url = "jdbc:sqlite:" + database;
+        Connection connection = DriverManager.getConnection(url);
 
+        try (Statement statement = connection.createStatement()) {
+            statement.execute("PRAGMA busy_timeout=3000");
+        }
+        return connection;
+    }
 }
