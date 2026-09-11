@@ -72,5 +72,41 @@ public final class AuthRepository {
     }
 
     public UserAccount authenticate(String username, char[] password){
+        throws SQLException {
+        if (username == null || username.trim().isEmpty()
+                || password == null || password.length == 0) {
+            return null;
+        }
+
+        String sql = "SELECT username, password_hash, salt, role "
+                + "FROM users WHERE username=? AND active=1";
+
+        try (Connection connection = connect();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, username.trim());
+
+            try (ResultSet result = statement.executeQuery()) {
+                if (!result.next()) {
+                    return null;
+                }
+
+                String savedHash = result.getString("password_hash");
+                String savedSalt = result.getString("salt");
+                boolean correctPassword = PasswordHasher.matches(
+                        password, savedHash, savedSalt);
+
+                if (!correctPassword) {
+                    return null;
+                }
+
+                return new UserAccount(result.getString("username"),
+                        result.getString("role"));
+            }
+        }
+    }
+
+    public Path getDatabase() {
+        return database;
     }
 }
+
