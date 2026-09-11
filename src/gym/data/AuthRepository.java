@@ -70,4 +70,7 @@ public final class AuthRepository {
             statement.executeUpdate();
         }
     }
+
+    public UserAccount authenticate(String username, char[] password){
+    }
 }
