@@ -44,6 +44,7 @@ public final class MembershipRepository {
                 + "rate_cents INTEGER NOT NULL CHECK(typeof(rate_cents)='integer' AND rate_cents BETWEEN 1 AND 100000000), "
                 + "discount_percent INTEGER NOT NULL DEFAULT 0 CHECK(discount_percent BETWEEN 0 AND 100)"
                 + ")";
+
         try (Connection connection = connect();
              Statement statement = connection.createStatement()) {
             statement.execute(sql);
@@ -64,7 +65,7 @@ public final class MembershipRepository {
         return connection;
     }
 
-     public void insert(Membership membership) throws SQLException {
+    public void insert(Membership membership) throws SQLException {
         String sql = "INSERT INTO memberships(member_id, member_name, ic_number, "
                 + "phone_number, start_date, expiry_date, membership_type, status, "
                 + "rate_cents, discount_percent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -76,7 +77,7 @@ public final class MembershipRepository {
         }
     }
 
-     public void update(Membership membership) throws SQLException {
+    public void update(Membership membership) throws SQLException {
         String sql = "UPDATE memberships SET member_name=?, ic_number=?, "
                 + "phone_number=?, start_date=?, expiry_date=?, membership_type=?, "
                 + "status=?, rate_cents=?, discount_percent=? WHERE member_id=?";
@@ -99,6 +100,7 @@ public final class MembershipRepository {
             }
         }
     }
+
     public void delete(String memberId) throws SQLException {
         String sql = "DELETE FROM memberships WHERE member_id=?";
 
@@ -143,5 +145,35 @@ public final class MembershipRepository {
                 rateCents, discountPercent);
     }
 
+    private void bindMembership(PreparedStatement statement,
+                                Membership membership) throws SQLException {
+        statement.setString(1, membership.getMemberId());
+        statement.setString(2, membership.getMemberName());
+        statement.setString(3, membership.getIcNumber());
+        statement.setString(4, membership.getPhoneNumber());
+        statement.setString(5, membership.getStartDate().toString());
+        statement.setString(6, membership.getExpiryDate().toString());
+        statement.setString(7, membership.getMembershipType());
+        statement.setString(8, membership.getStatus().name());
+        statement.setLong(9, getRateCents(membership));
+        statement.setInt(10, getDiscountPercent(membership));
+    }
 
+    private long getRateCents(Membership membership) {
+        if (membership instanceof MonthlyMembership) {
+            MonthlyMembership monthly = (MonthlyMembership) membership;
+            return monthly.getMonthlyRateCents();
+        }
 
+        YearlyMembership yearly = (YearlyMembership) membership;
+        return yearly.getYearlyRateCents();
+    }
+
+    private int getDiscountPercent(Membership membership) {
+        if (membership instanceof YearlyMembership) {
+            YearlyMembership yearly = (YearlyMembership) membership;
+            return yearly.getDiscountPercent();
+        }
+        return 0;
+    }
+}
