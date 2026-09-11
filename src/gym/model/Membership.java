@@ -16,4 +16,4 @@ public abstract class Membership {
     private final String phoneNumber;
     private final LocalDate startDate;
     private final LocalDate expiryDate;
-    private MembershipStatus status;
+    private MembershipStatus status; 
