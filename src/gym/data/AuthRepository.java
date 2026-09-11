@@ -53,4 +53,21 @@ public final class AuthRepository {
         }
         return connection;
     }
+
+    // Seeds the database with a default admin user.
+    private void seedDemoUser() throws SQLException {
+        String salt = PasswordHasher.newSalt();
+        String hash = PasswordHasher.hash("admin123".toCharArray(), salt);
+        String sql = "INSERT OR IGNORE INTO users "
+                + "(username, password_hash, salt, role, active) VALUES (?, ?, ?, ?, 1)";
+
+        try (Connection connection = connect();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, "admin");
+            statement.setString(2, hash);
+            statement.setString(3, salt);
+            statement.setString(4, "ADMIN");
+            statement.executeUpdate();
+        }
+    }
 }
