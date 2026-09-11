@@ -75,7 +75,7 @@ public final class MembershipRepository {
             statement.executeUpdate();
         }
     }
-    
+
      public void update(Membership membership) throws SQLException {
         String sql = "UPDATE memberships SET member_name=?, ic_number=?, "
                 + "phone_number=?, start_date=?, expiry_date=?, membership_type=?, "
@@ -99,3 +99,49 @@ public final class MembershipRepository {
             }
         }
     }
+    public void delete(String memberId) throws SQLException {
+        String sql = "DELETE FROM memberships WHERE member_id=?";
+
+        try (Connection connection = connect();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, memberId);
+
+            if (statement.executeUpdate() != 1) {
+                throw new SQLException("Member no longer exists. Refresh the table.");
+            }
+        }
+    }
+
+    public List<Membership> findAll() throws SQLException {
+        List<Membership> memberships = new ArrayList<>();
+        String sql = "SELECT * FROM memberships ORDER BY member_id";
+
+        try (Connection connection = connect();
+             Statement statement = connection.createStatement();
+             ResultSet result = statement.executeQuery(sql)) {
+            while (result.next()) {
+                memberships.add(readMembership(result));
+            }
+        }
+        return memberships;
+    }
+
+    private Membership readMembership(ResultSet result) throws SQLException {
+        String memberId = result.getString("member_id");
+        String memberName = result.getString("member_name");
+        String icNumber = result.getString("ic_number");
+        String phoneNumber = result.getString("phone_number");
+        LocalDate startDate = LocalDate.parse(result.getString("start_date"));
+        LocalDate expiryDate = LocalDate.parse(result.getString("expiry_date"));
+        MembershipStatus status = MembershipStatus.fromDatabase(result.getString("status"));
+        String type = result.getString("membership_type");
+        long rateCents = result.getLong("rate_cents");
+        int discountPercent = result.getInt("discount_percent");
+
+        return Membership.fromDatabase(memberId, memberName, icNumber,
+                phoneNumber, startDate, expiryDate, status, type,
+                rateCents, discountPercent);
+    }
+
+
+
