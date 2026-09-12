@@ -1,5 +1,4 @@
 package gym.data;
-
 import gym.model.Membership;
 import gym.model.MembershipStatus;
 import gym.model.MonthlyMembership;
