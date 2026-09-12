@@ -9,3 +9,11 @@ public enum MembershipStatus {
         if (value == null) {
             return ACTIVE;
         }
+
+        try {
+            return MembershipStatus.valueOf(value.toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            return ACTIVE;
+        }
+    }
+}
