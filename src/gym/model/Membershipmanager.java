@@ -51,5 +51,19 @@ public final class MembershipManager {
         throw new SQLException("Member is not loaded.");
     }
 
+    // Padam membership: delete dari DB dan remove dari senarai local
+    public void deleteMembership(String memberId) throws SQLException {
+        repository.delete(memberId); // padam dalam DB
+
+        // Padam dari senarai local ikut memberId
+        for (int index = memberList.size() - 1; index >= 0; index--) {
+            if (memberList.get(index).getMemberId().equals(memberId)) {
+                memberList.remove(index);
+                return;
+            }
+        }
+    }
+
+
 
 }    
