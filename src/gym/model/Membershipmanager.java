@@ -64,6 +64,15 @@ public final class MembershipManager {
         }
     }
 
+    // Cari membership dalam senarai local ikut memberId (case-insensitive)
+    public Membership searchMembership(String memberId) {
+        for (Membership membership : memberList) {
+            if (membership.getMemberId().equalsIgnoreCase(memberId)) {
+                return membership; // jumpa
+            }
+        }
+        return null; // tak jumpa
+    }
 
 
 }    
