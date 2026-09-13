@@ -74,5 +74,10 @@ public final class MembershipManager {
         return null; // tak jumpa
     }
 
+    // Refresh senarai local: clear dan load semula semua data dari DB
+    public void refresh() throws SQLException {
+        memberList.clear();
+        memberList.addAll(repository.findAll());
+    }
 
 }    
