@@ -57,7 +57,7 @@ public final class PasswordHasher {
         } catch (IllegalArgumentException ex) {
             return false;
         }
-
+      public class 
     }
     
 }
