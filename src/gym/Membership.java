@@ -2,8 +2,6 @@ package gym;
 
 /**
  * Membership is the abstract superclass representing a gym member.
- * Common attributes are stored here; each subclass provides its own
- * fee calculation rule (polymorphism).
  */
 public abstract class Membership {
     private int memberID;
@@ -74,13 +72,13 @@ public abstract class Membership {
         this.rate = rate;
     }
 
-    // Abstract method - each subclass MUST provide its own fee calculation.
+    
     public abstract double calculateFee();
 
-    // Abstract method - each subclass identifies its own type string.
+    
     public abstract String getMembershipType();
 
-    // Returns the discount percentage used (0 for Monthly, staff-entered value for Yearly).
+    
     public double getDiscountPercent() {
         return 0.0;
     }
