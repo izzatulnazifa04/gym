@@ -110,3 +110,18 @@ public class DatabaseHelper {
                 String startDate = rs.getString("start_date");
                 double rate = rs.getDouble("rate");
                 double discount = rs.getDouble("discount");
+
+                Membership m;
+                if (type.equals("Yearly")) {
+                    m = new YearlyMembership(id, name, ic, startDate, rate, discount);
+                } else {
+                    m = new MonthlyMembership(id, name, ic, startDate, rate);
+                }
+                list.add(m);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Retrieve error: " + e.getMessage());
+        }
+        return list;
+    }
