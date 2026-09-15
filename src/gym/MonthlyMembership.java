@@ -31,6 +31,6 @@ public class MonthlyMembership extends Membership {
 
     @Override
     public int getDuration() {
-        return 12;
+        return 1;
     }
 }
