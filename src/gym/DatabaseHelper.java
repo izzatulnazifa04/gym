@@ -74,3 +74,59 @@ public class DatabaseHelper {
     public static boolean addMembership(Membership membership) {
         String sql = "INSERT INTO memberships (member_name, ic_number, membership_type, start_date, rate, discount) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, membership.getMemberName());
+            pstmt.setString(2, membership.getIcNumber());
+            pstmt.setString(3, membership.getMembershipType());
+            pstmt.setString(4, membership.getStartDate());
+            pstmt.setDouble(5, membership.getRate());
+            pstmt.setDouble(6, membership.getDiscountPercent());
+            pstmt.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Add membership error: " + e.getMessage());
+            return false;
+        }
+    }
+
+     // READ - retrieve all membership records, reconstructing rate/discount too.
+    public static List<Membership> getAllMemberships() {
+        List<Membership> list = new ArrayList<>();
+        String sql = "SELECT * FROM memberships ORDER BY member_id";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                int id = rs.getInt("member_id");
+                String name = rs.getString("member_name");
+                String ic = rs.getString("ic_number");
+                String type = rs.getString("membership_type");
+                String startDate = rs.getString("start_date");
+                double rate = rs.getDouble("rate");
+                double discount = rs.getDouble("discount");
+
+                Membership m;
+                if (type.equals("Yearly")) {
+                    m = new YearlyMembership(id, name, ic, startDate, rate, discount);
+                } else {
+                    m = new MonthlyMembership(id, name, ic, startDate, rate);
+                }
+                list.add(m);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Retrieve error: " + e.getMessage());
+        }
+        return list;
+    }
+
+    // UPDATE - update an existing membership record by ID, including rate/discount.
+    public static boolean updateMembership(Membership membership) {
+        String sql = "UPDATE memberships SET member_name = ?, ic_number = ?, "
+                + "membership_type = ?, start_date = ?, rate = ?, discount = ? WHERE member_id = ?";
