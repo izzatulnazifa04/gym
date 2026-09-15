@@ -69,3 +69,8 @@ public class DatabaseHelper {
             return false;
         }
     }
+
+    // CREATE - insert a new membership record, including rate and discount.
+    public static boolean addMembership(Membership membership) {
+        String sql = "INSERT INTO memberships (member_name, ic_number, membership_type, start_date, rate, discount) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
