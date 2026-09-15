@@ -30,3 +30,10 @@ public class DatabaseHelper {
             System.out.println("Database initialization error: " + e.getMessage());
         }
     }
+
+    public static void initializeStaffTable() {
+        String createSql = "CREATE TABLE IF NOT EXISTS staff ("
+                + "staff_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "username TEXT NOT NULL UNIQUE, "
+                + "password TEXT NOT NULL"
+                + ")";
