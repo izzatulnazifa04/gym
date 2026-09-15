@@ -125,6 +125,7 @@ public class DatabaseHelper {
                 String startDate = rs.getString("start_date");
                 double rate = rs.getDouble("rate");
                 double discount = rs.getDouble("discount");
+                String endDate = rs.getString("end_date");
 
                 Membership m;
                 if (type.equals("Yearly")) {
