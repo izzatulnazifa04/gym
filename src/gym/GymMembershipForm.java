@@ -107,6 +107,7 @@ public class GymMembershipForm extends javax.swing.JFrame {
         btnClear.setText("Clear");
         btnClear.addActionListener(this::btnClearActionPerformed);
 
+        table.setBackground(new java.awt.Color(255, 255, 153));
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
@@ -136,10 +137,6 @@ public class GymMembershipForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(scrollPane1)
-                .addGap(16, 16, 16))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -190,6 +187,10 @@ public class GymMembershipForm extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addComponent(jLabel8)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,9 +233,9 @@ public class GymMembershipForm extends javax.swing.JFrame {
                     .addComponent(btnUpdate)
                     .addComponent(btnDelete)
                     .addComponent(btnClear))
-                .addGap(8, 8, 8)
-                .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+                .addGap(18, 18, 18)
+                .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
