@@ -41,5 +41,10 @@ public class YearlyMembership extends Membership {
     public void setDiscountPercent(double discountPercent) {
         this.discountPercent = discountPercent;
     }
+
+    @Override
+    public int getDuration() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }
