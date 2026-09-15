@@ -74,3 +74,21 @@ public class DatabaseHelper {
     public static boolean addMembership(Membership membership) {
         String sql = "INSERT INTO memberships (member_name, ic_number, membership_type, start_date, rate, discount) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, membership.getMemberName());
+            pstmt.setString(2, membership.getIcNumber());
+            pstmt.setString(3, membership.getMembershipType());
+            pstmt.setString(4, membership.getStartDate());
+            pstmt.setDouble(5, membership.getRate());
+            pstmt.setDouble(6, membership.getDiscountPercent());
+            pstmt.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Add membership error: " + e.getMessage());
+            return false;
+        }
+    }
