@@ -87,19 +87,23 @@ public class GymMembershipForm extends javax.swing.JFrame {
         txtDiscount.setText("15");
         txtDiscount.addActionListener(this::txtDiscountActionPerformed);
 
-        btnSave.setBackground(new java.awt.Color(204, 255, 204));
+        btnSave.setBackground(new java.awt.Color(153, 204, 255));
+        btnSave.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSave.setText("Save");
         btnSave.addActionListener(this::btnSaveActionPerformed);
 
-        btnUpdate.setBackground(new java.awt.Color(204, 255, 204));
+        btnUpdate.setBackground(new java.awt.Color(153, 204, 255));
+        btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(this::btnUpdateActionPerformed);
 
-        btnDelete.setBackground(new java.awt.Color(204, 255, 204));
+        btnDelete.setBackground(new java.awt.Color(153, 204, 255));
+        btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDelete.setText("Delete");
         btnDelete.addActionListener(this::btnDeleteActionPerformed);
 
-        btnClear.setBackground(new java.awt.Color(204, 255, 204));
+        btnClear.setBackground(new java.awt.Color(153, 204, 255));
+        btnClear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClear.setText("Clear");
         btnClear.addActionListener(this::btnClearActionPerformed);
 
