@@ -109,17 +109,17 @@ public class GymMembershipForm extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "IC Number", "Type", "Start Date", "Rate (RM)", "Discount (%)", "Fee (RM)"
+                "ID", "Name", "IC Number", "Type", "Start Date", "End Date", "Rate (RM)", "Discount (%)", "Fee (RM)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -278,7 +278,7 @@ public class GymMembershipForm extends javax.swing.JFrame {
 
 // ---------- Setup table columns and row-click listener ----------
 private void setupTable() {
-    String[] columns = {"ID", "Name", "IC Number", "Type", "Start Date", "Rate (RM)", "Discount (%)", "Fee (RM)"};
+    String[] columns = {"ID", "Name", "IC Number", "Type", "Start Date","End Date", "Rate (RM)", "Discount (%)", "Fee (RM)"};
     tableModel = new javax.swing.table.DefaultTableModel(columns, 0) {
         @Override
         public boolean isCellEditable(int row, int column) {
