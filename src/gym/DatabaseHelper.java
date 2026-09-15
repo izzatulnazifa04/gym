@@ -47,3 +47,8 @@ public class DatabaseHelper {
             if (rs.next() && rs.getInt("total") == 0) {
                 stmt.execute("INSERT INTO staff (username, password) VALUES ('admin', 'admin123')");
             }
+
+        } catch (SQLException e) {
+            System.out.println("Staff table initialization error: " + e.getMessage());
+        }
+    }
