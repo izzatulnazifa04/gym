@@ -1,4 +1,4 @@
-package gmms;
+package gym;
 
 import java.sql.*;
 import java.util.ArrayList;
