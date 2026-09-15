@@ -303,12 +303,13 @@
         <Component class="javax.swing.JTable" name="table">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="8" rowCount="4">
+              <Table columnCount="9" rowCount="4">
                 <Column editable="false" title="ID" type="java.lang.Object"/>
                 <Column editable="false" title="Name" type="java.lang.Object"/>
                 <Column editable="false" title="IC Number" type="java.lang.Object"/>
                 <Column editable="false" title="Type" type="java.lang.Object"/>
                 <Column editable="false" title="Start Date" type="java.lang.Object"/>
+                <Column editable="false" title="End Date" type="java.lang.Object"/>
                 <Column editable="false" title="Rate (RM)" type="java.lang.Object"/>
                 <Column editable="false" title="Discount (%)" type="java.lang.Object"/>
                 <Column editable="false" title="Fee (RM)" type="java.lang.Object"/>
