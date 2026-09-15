@@ -149,3 +149,7 @@ public class DatabaseHelper {
             return false;
         }
     }
+
+    // DELETE - remove a membership record by ID.
+    public static boolean deleteMembership(int memberID) {
+        String sql = "DELETE FROM memberships WHERE member_id = ?";
