@@ -12,6 +12,10 @@ public class DatabaseHelper {
 
     private static final String URL = "jdbc:sqlite:gym.db";
 
+    public static String getLastError() {
+    return lastError;
+    }
+
     public static void initializeDatabase() {
         String sql = "CREATE TABLE IF NOT EXISTS memberships ("
                 + "member_id INTEGER PRIMARY KEY AUTOINCREMENT, "
