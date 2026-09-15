@@ -1,4 +1,4 @@
-package gmms;
+package gym;
 
 import javax.swing.SwingUtilities;
 
