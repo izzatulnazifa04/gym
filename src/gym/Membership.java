@@ -10,9 +10,6 @@ public abstract class Membership {
     private String startDate;   // format: yyyy-MM-dd
     protected double rate;      // base fee/rate entered by staff (RM)
 
-    private String expiryDate = ""; //cek expired membership
-    private String status = "";
-    
     public Membership() {
         memberName = "";
         icNumber = "";

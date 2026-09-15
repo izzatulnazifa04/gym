@@ -5,12 +5,12 @@ public class YearlyMembership extends Membership {
     private double discountPercent;
 
     public YearlyMembership() {
-        super();
+        super(); //nak panggil constructor dari superclass Membership
         discountPercent = 0.0;
     }
 
     public YearlyMembership(String memberName, String icNumber, String startDate, double rate, double discountPercent) {
-        super(memberName, icNumber, startDate, rate);
+        super(memberName, icNumber, startDate, rate); //hantar ke superclass
         this.discountPercent = discountPercent;
     }
 
@@ -21,8 +21,9 @@ public class YearlyMembership extends Membership {
 
     @Override
     public double calculateFee() {
-        // "rate" here represents the FULL yearly price (before discount)
-        // when the type is Yearly, so the discount is applied directly.
+        
+        // "rate" = harga sebelum diskaun
+        // kira harga lepas diskaun: rate × (1 - diskaun%)
         double discountedPrice = rate * (1 - discountPercent / 100.0);
         return Math.round(discountedPrice * 100.0) / 100.0;
     }
