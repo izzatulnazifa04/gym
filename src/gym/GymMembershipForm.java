@@ -17,6 +17,7 @@ public class GymMembershipForm extends javax.swing.JFrame {
      */
     private int selectedMemberID = -1;
     private javax.swing.table.DefaultTableModel tableModel;
+    private java.util.List<Membership> currentList;
     
     public GymMembershipForm() {
         initComponents();
@@ -24,8 +25,6 @@ public class GymMembershipForm extends javax.swing.JFrame {
         updateRateDefault();
         loadTableData();
 }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,8 +34,6 @@ public class GymMembershipForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -55,21 +52,8 @@ public class GymMembershipForm extends javax.swing.JFrame {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
-        table = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        scrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,7 +102,7 @@ public class GymMembershipForm extends javax.swing.JFrame {
         btnClear.setText("Clear");
         btnClear.addActionListener(this::btnClearActionPerformed);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -137,7 +121,7 @@ public class GymMembershipForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        table.setViewportView(jTable2);
+        scrollPane1.setViewportView(table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -185,7 +169,7 @@ public class GymMembershipForm extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtIC, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(179, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,8 +177,8 @@ public class GymMembershipForm extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, 824, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(scrollPane1)
+                .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,8 +216,8 @@ public class GymMembershipForm extends javax.swing.JFrame {
                     .addComponent(btnDelete)
                     .addComponent(btnClear))
                 .addGap(8, 8, 8)
-                .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -276,25 +260,67 @@ public class GymMembershipForm extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbTypeActionPerformed
 
 // ---------- Setup table columns and row-click listener ----------
-    private void setupTable() {
-        String[] columns = {"ID", "Name", "IC Number", "Type", "Start Date", "Rate (RM)", "Discount (%)", "Fee (RM)"};
-        tableModel = new javax.swing.table.DefaultTableModel(columns, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-              return false;
+private void setupTable() {
+    String[] columns = {"ID", "Name", "IC Number", "Type", "Start Date", "Rate (RM)", "Discount (%)", "Fee (RM)"};
+    tableModel = new javax.swing.table.DefaultTableModel(columns, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
         }
     };
-         table.setModel(tableModel);
+    table.setModel(tableModel);
 
-    // Hide the ID column visually - staff sees Name first, but the
-    // system still tracks the ID internally for Update/Delete operations.
-          table.getColumnModel().getColumn(0).setMinWidth(0);
-          table.getColumnModel().getColumn(0).setMaxWidth(0);
-          table.getColumnModel().getColumn(0).setWidth(0);
+    table.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting() && table.getSelectedRow() != -1) {
+            int row = table.getSelectedRow();
+            selectedMemberID = (int) tableModel.getValueAt(row, 0);
+            txtName.setText((String) tableModel.getValueAt(row, 1));
+            txtIC.setText((String) tableModel.getValueAt(row, 2));
+            cmbType.setSelectedItem((String) tableModel.getValueAt(row, 3));
+            txtStartDate.setText((String) tableModel.getValueAt(row, 4));
+            txtRate.setText(String.valueOf(tableModel.getValueAt(row, 5)));
+            txtDiscount.setText(String.valueOf(tableModel.getValueAt(row, 6)));
+            txtDiscount.setEnabled("Yearly".equals(tableModel.getValueAt(row, 3)));
+            lblFee.setText("RM" + tableModel.getValueAt(row, 7));
+        }
+    });
+}
 
-          table.getSelectionModel().addListSelectionListener(e -> {
-        // baris lain kekal sama, tak berubah
-        
+// ---------- Auto-fill sensible defaults when the membership type changes ----------
+private void updateRateDefault() {
+    String type = (String) cmbType.getSelectedItem();
+    if ("Yearly".equals(type)) {
+        txtRate.setText("960.00");
+        txtDiscount.setText("15");
+        txtDiscount.setEnabled(true);
+    } else {
+        txtRate.setText("80.00");
+        txtDiscount.setText("0");
+        txtDiscount.setEnabled(false);
+    }
+}
+
+// ---------- Live fee preview as staff types the rate/discount ----------
+private void updateFeePreview() {
+    try {
+        double rate = Double.parseDouble(txtRate.getText().trim());
+        String type = (String) cmbType.getSelectedItem();
+
+        Membership preview;
+        if ("Yearly".equals(type)) {
+            double discount = txtDiscount.getText().trim().isEmpty()
+                    ? 0.0 : Double.parseDouble(txtDiscount.getText().trim());
+            preview = new YearlyMembership("", "", "", rate, discount);
+        } else {
+            preview = new MonthlyMembership("", "", "", rate);
+        }
+        lblFee.setText("RM" + String.format("%.2f", preview.calculateFee()));
+
+    } catch (NumberFormatException ex) {
+        lblFee.setText("RM0.00");
+    }
+}
+
 // ---------- Load all records from database into the JTable ----------
 private void loadTableData() {
     tableModel.setRowCount(0);
@@ -367,7 +393,7 @@ private Membership buildMembershipFromForm() {
 }
 
 // ---------- Clear the form ----------
-private void clearForm() {
+ private void clearForm() {
     txtName.setText("");
     txtIC.setText("");
     cmbType.setSelectedIndex(0);
@@ -375,7 +401,7 @@ private void clearForm() {
     updateRateDefault();
     lblFee.setText("RM0.00");
     selectedMemberID = -1;
-    table.clearSelection();
+   table.clearSelection();
 }
 
 // ---------- Save / Update / Delete handlers ----------
@@ -461,11 +487,9 @@ private void handleDelete() {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lblFee;
-    private javax.swing.JScrollPane table;
+    private javax.swing.JScrollPane scrollPane1;
+    private javax.swing.JTable table;
     private javax.swing.JTextField txtDiscount;
     private javax.swing.JTextField txtIC;
     private javax.swing.JTextField txtName;

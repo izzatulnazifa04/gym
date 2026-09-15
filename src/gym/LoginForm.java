@@ -62,9 +62,9 @@ public class LoginForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(161, 161, 161)
+                .addGap(152, 152, 152)
                 .addComponent(btnLogin)
-                .addGap(26, 26, 26)
+                .addGap(30, 30, 30)
                 .addComponent(btnExit)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -83,14 +83,14 @@ public class LoginForm extends javax.swing.JFrame {
                         .addGap(65, 65, 65))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(110, 110, 110))))
+                        .addGap(115, 115, 115))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel1)
-                .addGap(33, 33, 33)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -109,29 +109,30 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-    String username = txtUsername.getText().trim();
-    String password = new String(txtPassword.getPassword()).trim();
+        String username = txtUsername.getText().trim();
+        String password = new String(txtPassword.getPassword()).trim();
 
-    if (username.isEmpty() || password.isEmpty()) {
+if (username.isEmpty() || password.isEmpty()) {
     javax.swing.JOptionPane.showMessageDialog(this, "Please enter both username and password.");
     return;
-    }
+}
 
-    boolean valid = DatabaseHelper.validateLogin(username, password);
+boolean valid = DatabaseHelper.validateLogin(username, password);
 
-    if (valid) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Login successful. Welcome, " + username + "!");
-        this.dispose();
-        GymMembershipForm mainForm = new GymMembershipForm();
-        mainForm.setVisible(true);
-    } else {
+if (valid) {
+    javax.swing.JOptionPane.showMessageDialog(this, "Login successful. Welcome, " + username + "!");
+    this.dispose();
+    GymMembershipForm mainForm = new GymMembershipForm();
+    mainForm.setVisible(true);
+} else {
     javax.swing.JOptionPane.showMessageDialog(this, "Invalid username or password.");
     txtPassword.setText("");
+}
     
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-      System.exit(0);
+    System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 
     /**
