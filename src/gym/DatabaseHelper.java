@@ -87,10 +87,15 @@ public class DatabaseHelper {
             pstmt.executeUpdate();
             return true;
 
-        } catch (SQLException e) {
-            System.out.println("Add membership error: " + e.getMessage());
-            return false;
-        }
+            } catch (SQLException e) {
+                if (e.getMessage() != null && e.getMessage().toLowerCase().contains("unique")) {
+                    lastError = "This IC Number is already registered. Please use a different IC Number.";
+                    } else {
+                        lastError = "Failed to save member: " + e.getMessage();
+                        }
+                        System.out.println("Add membership error: " + e.getMessage());
+                        return false;
+                        }
     }
 
     // READ - retrieve all membership records, reconstructing rate/discount too.
