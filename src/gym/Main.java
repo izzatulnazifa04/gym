@@ -1,6 +1,6 @@
 package gym;
 
-import javax.swing.SwingUtilities;
+import javax.swing.SwingUtilities; //import data dari gui toolkit
 
 /**
  * Main - application entry point.
@@ -9,10 +9,10 @@ import javax.swing.SwingUtilities;
  */
 public class Main {
     public static void main(String[] args) {
-        DatabaseHelper.initializeDatabase();
-        DatabaseHelper.initializeStaffTable();
+        DatabaseHelper.initializeDatabase(); // untuk pstikan database connected and ready to go
+        DatabaseHelper.initializeStaffTable(); // utk pstikan table exists dan staff boleh log in
 
-        SwingUtilities.invokeLater(() -> {
+        SwingUtilities.invokeLater(() -> {  // use invokeLater to safely fire up the UI
             LoginForm login = new LoginForm();
             login.setVisible(true);
         });
