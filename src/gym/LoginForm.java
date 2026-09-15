@@ -109,29 +109,30 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-    String username = txtUsername.getText().trim();
-    String password = new String(txtPassword.getPassword()).trim();
+        String username = txtUsername.getText().trim();
+        String password = new String(txtPassword.getPassword()).trim();
 
-    if (username.isEmpty() || password.isEmpty()) {
+if (username.isEmpty() || password.isEmpty()) {
     javax.swing.JOptionPane.showMessageDialog(this, "Please enter both username and password.");
     return;
-    }
+}
 
-    boolean valid = DatabaseHelper.validateLogin(username, password);
+boolean valid = DatabaseHelper.validateLogin(username, password);
 
-    if (valid) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Login successful. Welcome, " + username + "!");
-        this.dispose();
-        GymMembershipForm mainForm = new GymMembershipForm();
-        mainForm.setVisible(true);
-    } else {
+if (valid) {
+    javax.swing.JOptionPane.showMessageDialog(this, "Login successful. Welcome, " + username + "!");
+    this.dispose();
+    GymMembershipForm mainForm = new GymMembershipForm();
+    mainForm.setVisible(true);
+} else {
     javax.swing.JOptionPane.showMessageDialog(this, "Invalid username or password.");
     txtPassword.setText("");
+}
     
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-      System.exit(0);
+    System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 
     /**

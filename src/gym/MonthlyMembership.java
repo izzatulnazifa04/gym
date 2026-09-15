@@ -28,4 +28,9 @@ public class MonthlyMembership extends Membership {
     public String getMembershipType() {
         return "Monthly";
     }
+
+    @Override
+    public int getDuration() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

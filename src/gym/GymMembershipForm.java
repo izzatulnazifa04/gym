@@ -4,6 +4,36 @@
  */
 package gym;
 
+import javax.swing.table.DefaultTableModel;
+
+    void setVisible(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void updateRateDefault() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void updateFeePreview() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void clearForm() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void handleDelete() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void handleUpdate() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void handleSave() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 /**
  *
  * @author IZZATUL NAZIFA
@@ -24,6 +54,14 @@ public class GymMembershipForm extends javax.swing.JFrame {
         updateRateDefault();
         loadTableData();
 }
+
+        private void loadTableData() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        private void updateRateDefault() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
     }
 
     /**
@@ -256,10 +294,10 @@ public class GymMembershipForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDiscountActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        handleSave();    }//GEN-LAST:event_btnSaveActionPerformed
+     handleSave();    }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        handleUpdate();
+     handleUpdate();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -278,12 +316,12 @@ public class GymMembershipForm extends javax.swing.JFrame {
 // ---------- Setup table columns and row-click listener ----------
     private void setupTable() {
         String[] columns = {"ID", "Name", "IC Number", "Type", "Start Date", "Rate (RM)", "Discount (%)", "Fee (RM)"};
-        tableModel = new javax.swing.table.DefaultTableModel(columns, 0) {
+        DefaultTableModel tableModel = new javax.swing.table.DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-              return false;
-        }
-    };
+                return false;
+            }
+        };
          table.setModel(tableModel);
 
     // Hide the ID column visually - staff sees Name first, but the
