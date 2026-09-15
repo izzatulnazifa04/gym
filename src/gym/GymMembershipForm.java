@@ -276,67 +276,25 @@ public class GymMembershipForm extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbTypeActionPerformed
 
 // ---------- Setup table columns and row-click listener ----------
-private void setupTable() {
-    String[] columns = {"ID", "Name", "IC Number", "Type", "Start Date", "Rate (RM)", "Discount (%)", "Fee (RM)"};
-    tableModel = new javax.swing.table.DefaultTableModel(columns, 0) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
+    private void setupTable() {
+        String[] columns = {"ID", "Name", "IC Number", "Type", "Start Date", "Rate (RM)", "Discount (%)", "Fee (RM)"};
+        tableModel = new javax.swing.table.DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+              return false;
         }
     };
-    table.setModel(tableModel);
+         table.setModel(tableModel);
 
-    table.getSelectionModel().addListSelectionListener(e -> {
-        if (!e.getValueIsAdjusting() && table.getSelectedRow() != -1) {
-            int row = table.getSelectedRow();
-            selectedMemberID = (int) tableModel.getValueAt(row, 0);
-            txtName.setText((String) tableModel.getValueAt(row, 1));
-            txtIC.setText((String) tableModel.getValueAt(row, 2));
-            cmbType.setSelectedItem((String) tableModel.getValueAt(row, 3));
-            txtStartDate.setText((String) tableModel.getValueAt(row, 4));
-            txtRate.setText(String.valueOf(tableModel.getValueAt(row, 5)));
-            txtDiscount.setText(String.valueOf(tableModel.getValueAt(row, 6)));
-            txtDiscount.setEnabled("Yearly".equals(tableModel.getValueAt(row, 3)));
-            lblFee.setText("RM" + tableModel.getValueAt(row, 7));
-        }
-    });
-}
+    // Hide the ID column visually - staff sees Name first, but the
+    // system still tracks the ID internally for Update/Delete operations.
+          table.getColumnModel().getColumn(0).setMinWidth(0);
+          table.getColumnModel().getColumn(0).setMaxWidth(0);
+          table.getColumnModel().getColumn(0).setWidth(0);
 
-// ---------- Auto-fill sensible defaults when the membership type changes ----------
-private void updateRateDefault() {
-    String type = (String) cmbType.getSelectedItem();
-    if ("Yearly".equals(type)) {
-        txtRate.setText("960.00");
-        txtDiscount.setText("15");
-        txtDiscount.setEnabled(true);
-    } else {
-        txtRate.setText("80.00");
-        txtDiscount.setText("0");
-        txtDiscount.setEnabled(false);
-    }
-}
-
-// ---------- Live fee preview as staff types the rate/discount ----------
-private void updateFeePreview() {
-    try {
-        double rate = Double.parseDouble(txtRate.getText().trim());
-        String type = (String) cmbType.getSelectedItem();
-
-        Membership preview;
-        if ("Yearly".equals(type)) {
-            double discount = txtDiscount.getText().trim().isEmpty()
-                    ? 0.0 : Double.parseDouble(txtDiscount.getText().trim());
-            preview = new YearlyMembership("", "", "", rate, discount);
-        } else {
-            preview = new MonthlyMembership("", "", "", rate);
-        }
-        lblFee.setText("RM" + String.format("%.2f", preview.calculateFee()));
-
-    } catch (NumberFormatException ex) {
-        lblFee.setText("RM0.00");
-    }
-}
-
+          table.getSelectionModel().addListSelectionListener(e -> {
+        // baris lain kekal sama, tak berubah
+        
 // ---------- Load all records from database into the JTable ----------
 private void loadTableData() {
     tableModel.setRowCount(0);
