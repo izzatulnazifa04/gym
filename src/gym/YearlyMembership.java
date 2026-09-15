@@ -18,5 +18,13 @@ public class YearlyMembership extends Membership {
         super(memberID, memberName, icNumber, startDate, rate);
         this.discountPercent = discountPercent;
     }
+
+    @Override
+    public double calculateFee() {
+        // "rate" here represents the FULL yearly price (before discount)
+        // when the type is Yearly, so the discount is applied directly.
+        double discountedPrice = rate * (1 - discountPercent / 100.0);
+        return Math.round(discountedPrice * 100.0) / 100.0;
+    }
     
 }
