@@ -6,12 +6,15 @@ import java.time.format.DateTimeFormatter;
 /**
  * Membership is the abstract superclass representing a gym member.
  */
-public abstract class Membership {
+public final abstract class Membership {
     private int memberID;
     private String memberName;
     private String icNumber;
-    private String startDate;   // format: yyyy-MM-dd
+    private String startDate;   // format: yyyy-mm-d
+    private String endDate;   // format: yyyy-mm-dd
     protected double rate;      // base fee/rate entered by staff (RM)
+    
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");    
 
     public Membership() {
         memberName = "";
