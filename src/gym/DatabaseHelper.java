@@ -31,6 +31,11 @@ public class DatabaseHelper {
         try (Connection conn = DriverManager.getConnection(URL);
              Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
+            try {
+                stmt.execute("ALTER TABLE memberships ADD COLUMN end_date TEXT");
+            } catch (SQLException alreadyExists) {
+                // column already exists - nothing to do
+            }
         } catch (SQLException e) {
             System.out.println("Database initialization error: " + e.getMessage());
         }
@@ -127,9 +132,15 @@ public class DatabaseHelper {
                 } else {
                     m = new MonthlyMembership(id, name, ic, startDate, rate);
                 }
+                // Use the end date already stored in the database rather than
+                // recalculating, so old rows saved before this change still work.
+                if (endDate != null && !endDate.isEmpty()) {
+                    m.setEndDate(endDate);
+                } else {
+                    m.setEndDate(m.calculateEndDate());
+                }
                 list.add(m);
             }
-
         } catch (SQLException e) {
             System.out.println("Retrieve error: " + e.getMessage());
         }
