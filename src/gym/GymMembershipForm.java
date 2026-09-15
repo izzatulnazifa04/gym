@@ -277,7 +277,7 @@ public class GymMembershipForm extends javax.swing.JFrame {
         updateFeePreview();
     }//GEN-LAST:event_cmbTypeActionPerformed
 
-// ---------- Setup table columns and row-click listener ----------
+// setup table columns and row-click listener 
 private void setupTable() {
     String[] columns = {"ID", "Name", "IC Number", "Type", "Start Date","End Date", "Rate (RM)", "Discount (%)", "Fee (RM)"};
     tableModel = new javax.swing.table.DefaultTableModel(columns, 0) {
