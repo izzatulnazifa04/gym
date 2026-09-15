@@ -11,6 +11,7 @@ import java.util.List;
 public class DatabaseHelper {
 
     private static final String URL = "jdbc:sqlite:gym.db";
+    private static String lastError = "";
 
     public static String getLastError() {
     return lastError;
