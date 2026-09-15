@@ -371,7 +371,7 @@ private String validateInput() {
         return "All fields must be filled in.";
     }
     if (!startDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
-        return "Start Date must be in yyyy-MM-dd format (e.g., 2026-09-13).";
+        return "Start Date must be in yyyy-mm-dd format (e.g., 2026-09-13).";
     }
     try {
         double rate = Double.parseDouble(rateText);
