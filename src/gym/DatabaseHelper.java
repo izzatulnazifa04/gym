@@ -37,3 +37,40 @@ public class DatabaseHelper {
                 + "username TEXT NOT NULL UNIQUE, "
                 + "password TEXT NOT NULL"
                 + ")";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             Statement stmt = conn.createStatement()) {
+
+            stmt.execute(createSql);
+
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS total FROM staff");
+            if (rs.next() && rs.getInt("total") == 0) {
+                stmt.execute("INSERT INTO staff (username, password) VALUES ('admin', 'admin123')");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Staff table initialization error: " + e.getMessage());
+        }
+    }
+
+    public static boolean validateLogin(String username, String password) {
+        String sql = "SELECT * FROM staff WHERE username = ? AND password = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next();
+
+        } catch (SQLException e) {
+            System.out.println("Login validation error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // CREATE - insert a new membership record, including rate and discount.
+    public static boolean addMembership(Membership membership) {
+        String sql = "INSERT INTO memberships (member_name, ic_number, membership_type, start_date, rate, discount) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";

@@ -27,5 +27,19 @@ public class YearlyMembership extends Membership {
         double discountedPrice = rate * (1 - discountPercent / 100.0);
         return Math.round(discountedPrice * 100.0) / 100.0;
     }
+
+    @Override
+    public String getMembershipType() {
+        return "Yearly";
+    }
+
+    @Override
+    public double getDiscountPercent() {
+        return discountPercent;
+    }
+
+    public void setDiscountPercent(double discountPercent) {
+        this.discountPercent = discountPercent;
+    }
     
 }
