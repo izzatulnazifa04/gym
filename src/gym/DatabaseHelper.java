@@ -93,7 +93,7 @@ public class DatabaseHelper {
         }
     }
 
-     // READ - retrieve all membership records, reconstructing rate/discount too.
+    // READ - retrieve all membership records, reconstructing rate/discount too.
     public static List<Membership> getAllMemberships() {
         List<Membership> list = new ArrayList<>();
         String sql = "SELECT * FROM memberships ORDER BY member_id";
@@ -153,3 +153,18 @@ public class DatabaseHelper {
     // DELETE - remove a membership record by ID.
     public static boolean deleteMembership(int memberID) {
         String sql = "DELETE FROM memberships WHERE member_id = ?";
+
+        //create try and catch
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, memberID);
+            int rows = pstmt.executeUpdate();
+            return rows > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Delete error: " + e.getMessage());
+            return false;
+        }
+    }
+}
