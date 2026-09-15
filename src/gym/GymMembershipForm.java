@@ -434,12 +434,14 @@ private void handleSave() {
 
     boolean success = DatabaseHelper.addMembership(membership);
     if (success) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Member saved successfully.");
+        javax.swing.JOptionPane.showMessageDialog(this, "Membership saved successfully.");
         loadTableData();
         clearForm();
     } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "Failed to save member.", "Database Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Failed to save member.\n" + DatabaseHelper.getLastError(),
+                "Database Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+}
 }
 
 private void handleUpdate() {

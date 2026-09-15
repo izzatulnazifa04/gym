@@ -31,6 +31,6 @@ public class MonthlyMembership extends Membership {
 
     @Override
     public int getDuration() {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        return 1; 
     }
 }

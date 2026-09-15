@@ -11,12 +11,17 @@ import java.util.List;
 public class DatabaseHelper {
 
     private static final String URL = "jdbc:sqlite:gym.db";
+    private static String lastError = "";
+
+    public static String getLastError() {
+    return lastError;
+    }
 
     public static void initializeDatabase() {
         String sql = "CREATE TABLE IF NOT EXISTS memberships ("
                 + "member_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "member_name TEXT NOT NULL, "
-                + "ic_number TEXT NOT NULL, "
+                + "ic_number TEXT NOT NULL UNIQUE, "
                 + "membership_type TEXT NOT NULL, "
                 + "start_date TEXT NOT NULL, "
                 + "rate REAL NOT NULL DEFAULT 80.0, "
@@ -26,6 +31,11 @@ public class DatabaseHelper {
         try (Connection conn = DriverManager.getConnection(URL);
              Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
+            try {
+                stmt.execute("ALTER TABLE memberships ADD COLUMN end_date TEXT");
+            } catch (SQLException alreadyExists) {
+                // column already exists - nothing to do
+            }
         } catch (SQLException e) {
             System.out.println("Database initialization error: " + e.getMessage());
         }
@@ -88,8 +98,13 @@ public class DatabaseHelper {
             return true;
 
         } catch (SQLException e) {
-            System.out.println("Add membership error: " + e.getMessage());
-            return false;
+            if (e.getMessage() != null && e.getMessage().toLowerCase().contains("unique")) {
+                lastError = "This IC Number is already registered. Please use a different IC Number.";
+                } else {
+                    lastError = "Failed to save member: " + e.getMessage();
+                    }
+                    System.out.println("Add membership error: " + e.getMessage());
+                    return false;
         }
     }
 
@@ -117,9 +132,15 @@ public class DatabaseHelper {
                 } else {
                     m = new MonthlyMembership(id, name, ic, startDate, rate);
                 }
+                // Use the end date already stored in the database rather than
+                // recalculating, so old rows saved before this change still work.
+                if (endDate != null && !endDate.isEmpty()) {
+                    m.setEndDate(endDate);
+                } else {
+                    m.setEndDate(m.calculateEndDate());
+                }
                 list.add(m);
             }
-
         } catch (SQLException e) {
             System.out.println("Retrieve error: " + e.getMessage());
         }

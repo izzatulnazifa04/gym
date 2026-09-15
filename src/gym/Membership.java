@@ -1,5 +1,8 @@
 package gym;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Membership is the abstract superclass representing a gym member.
  */
@@ -22,6 +25,7 @@ public abstract class Membership {
         this.icNumber = icNumber;
         this.startDate = startDate;
         this.rate = rate;
+        this.endDate = calculateEndDate();
     }
 
     public Membership(int memberID, String memberName, String icNumber, String startDate, double rate) {
@@ -30,6 +34,7 @@ public abstract class Membership {
         this.icNumber = icNumber;
         this.startDate = startDate;
         this.rate = rate;
+        this.endDate = calculateEndDate();
     }
 
     public int getMemberID() {
@@ -47,6 +52,27 @@ public abstract class Membership {
     
     public String getStartDate() {
         return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String calculateEndDate() {
+        if (startDate == null || startDate.isEmpty()) {
+            return "";
+        }
+        try {
+            LocalDate start = LocalDate.parse(startDate, DATE_FORMAT);
+            LocalDate end = start.plusMonths(getDuration());
+            return end.format(DATE_FORMAT);
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     public double getRate() {
