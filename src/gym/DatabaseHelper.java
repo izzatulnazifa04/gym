@@ -16,7 +16,7 @@ public class DatabaseHelper {
         String sql = "CREATE TABLE IF NOT EXISTS memberships ("
                 + "member_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "member_name TEXT NOT NULL, "
-                + "ic_number TEXT NOT NULL, "
+                + "ic_number TEXT NOT NULL UNIQUE, "
                 + "membership_type TEXT NOT NULL, "
                 + "start_date TEXT NOT NULL, "
                 + "rate REAL NOT NULL DEFAULT 80.0, "
