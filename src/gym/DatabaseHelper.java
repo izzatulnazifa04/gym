@@ -22,3 +22,11 @@ public class DatabaseHelper {
                 + "rate REAL NOT NULL DEFAULT 80.0, "
                 + "discount REAL NOT NULL DEFAULT 0.0"
                 + ")";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println("Database initialization error: " + e.getMessage());
+        }
+    }
