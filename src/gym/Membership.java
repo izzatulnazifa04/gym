@@ -7,27 +7,34 @@ public abstract class Membership {
     private int memberID;
     private String memberName;
     private String icNumber;
+    private String phoneNumber;
     private String startDate;   // format: yyyy-MM-dd
     protected double rate;      // base fee/rate entered by staff (RM)
 
+    private String expiryDate = ""; //cek expired membership
+    private String status = "";
+    
     public Membership() {
         memberName = "";
         icNumber = "";
+        phoneNumber = "";
         startDate = "";
         rate = 0.0;
     }
 
-    public Membership(String memberName, String icNumber, String startDate, double rate) {
+    public Membership(String memberName, String icNumber, String phoneNumber, String startDate, double rate) {
         this.memberName = memberName;
         this.icNumber = icNumber;
+        this.phoneNumber = phoneNumber;
         this.startDate = startDate;
         this.rate = rate;
     }
 
-    public Membership(int memberID, String memberName, String icNumber, String startDate, double rate) {
+    public Membership(int memberID, String memberName, String icNumber, String phoneNumber, String startDate, double rate) {
         this.memberID = memberID;
         this.memberName = memberName;
         this.icNumber = icNumber;
+        this.phoneNumber = phoneNumber;
         this.startDate = startDate;
         this.rate = rate;
     }
@@ -43,7 +50,11 @@ public abstract class Membership {
     public String getIcNumber() {
         return icNumber;
     }
-
+    
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    
     public String getStartDate() {
         return startDate;
     }
@@ -64,6 +75,10 @@ public abstract class Membership {
         this.icNumber = icNumber;
     }
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    
     public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
@@ -78,6 +93,8 @@ public abstract class Membership {
     
     public abstract String getMembershipType();
 
+    // membership period (Monthly = 1, Yearly = 12).
+    public abstract int getDuration();
     
     public double getDiscountPercent() {
         return 0.0;
