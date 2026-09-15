@@ -304,7 +304,7 @@ private void setupTable() {
     });
 }
 
-// ---------- Auto-fill sensible defaults when the membership type changes ----------
+// Auto-fill sensible defaults when the membership type changes 
 private void updateRateDefault() {
     String type = (String) cmbType.getSelectedItem();
     if ("Yearly".equals(type)) {
@@ -318,7 +318,7 @@ private void updateRateDefault() {
     }
 }
 
-// ---------- Live fee preview as staff types the rate/discount ----------
+// Live fee preview as staff types the rate/discount
 private void updateFeePreview() {
     try {
         double rate = Double.parseDouble(txtRate.getText().trim());
@@ -339,7 +339,7 @@ private void updateFeePreview() {
     }
 }
 
-// ---------- Load all records from database into the JTable ----------
+// Load all records from database into the JTable 
 private void loadTableData() {
     tableModel.setRowCount(0);
     java.util.List<Membership> memberships = DatabaseHelper.getAllMemberships();
@@ -360,7 +360,7 @@ private void loadTableData() {
     }
 }
 
-// ---------- Validate form input ----------
+// Validate form input 
 private String validateInput() {
     String name = txtName.getText().trim();
     String ic = txtIC.getText().trim();
@@ -394,7 +394,7 @@ private String validateInput() {
     return null;
 }
 
-// ---------- Build the correct Membership subclass from form input (polymorphism) ----------
+// Build the correct Membership subclass from form input (polymorphism) 
 private Membership buildMembershipFromForm() {
     String name = txtName.getText().trim();
     String ic = txtIC.getText().trim();
@@ -412,7 +412,7 @@ private Membership buildMembershipFromForm() {
     return membership;
 }
 
-// ---------- Clear the form ----------
+// Clear the form 
  private void clearForm() {
     txtName.setText("");
     txtIC.setText("");
@@ -424,7 +424,7 @@ private Membership buildMembershipFromForm() {
    table.clearSelection();
 }
 
-// ---------- Save / Update / Delete handlers ----------
+//  Save / Update / Delete handlers 
 private void handleSave() {
     String error = validateInput();
     if (error != null) {
