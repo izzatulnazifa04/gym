@@ -37,3 +37,13 @@ public class DatabaseHelper {
                 + "username TEXT NOT NULL UNIQUE, "
                 + "password TEXT NOT NULL"
                 + ")";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             Statement stmt = conn.createStatement()) {
+
+            stmt.execute(createSql);
+
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS total FROM staff");
+            if (rs.next() && rs.getInt("total") == 0) {
+                stmt.execute("INSERT INTO staff (username, password) VALUES ('admin', 'admin123')");
+            }
