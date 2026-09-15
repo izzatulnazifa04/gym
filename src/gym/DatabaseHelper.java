@@ -52,3 +52,20 @@ public class DatabaseHelper {
             System.out.println("Staff table initialization error: " + e.getMessage());
         }
     }
+
+    public static boolean validateLogin(String username, String password) {
+        String sql = "SELECT * FROM staff WHERE username = ? AND password = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next();
+
+        } catch (SQLException e) {
+            System.out.println("Login validation error: " + e.getMessage());
+            return false;
+        }
+    }
