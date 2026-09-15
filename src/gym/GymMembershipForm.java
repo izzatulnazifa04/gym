@@ -4,36 +4,6 @@
  */
 package gym;
 
-import javax.swing.table.DefaultTableModel;
-
-    void setVisible(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void updateRateDefault() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void updateFeePreview() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void clearForm() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void handleDelete() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void handleUpdate() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void handleSave() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 /**
  *
  * @author IZZATUL NAZIFA
@@ -47,6 +17,7 @@ public class GymMembershipForm extends javax.swing.JFrame {
      */
     private int selectedMemberID = -1;
     private javax.swing.table.DefaultTableModel tableModel;
+    private java.util.List<Membership> currentList;
     
     public GymMembershipForm() {
         initComponents();
@@ -54,16 +25,6 @@ public class GymMembershipForm extends javax.swing.JFrame {
         updateRateDefault();
         loadTableData();
 }
-
-        private void loadTableData() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        private void updateRateDefault() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -230,9 +191,9 @@ public class GymMembershipForm extends javax.swing.JFrame {
                                     .addComponent(txtStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(16, 16, 16)
                 .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, 824, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,9 +230,9 @@ public class GymMembershipForm extends javax.swing.JFrame {
                     .addComponent(btnUpdate)
                     .addComponent(btnDelete)
                     .addComponent(btnClear))
-                .addGap(8, 8, 8)
+                .addGap(18, 18, 18)
                 .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -294,10 +255,10 @@ public class GymMembershipForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDiscountActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-     handleSave();    }//GEN-LAST:event_btnSaveActionPerformed
+        handleSave();    }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-     handleUpdate();
+        handleUpdate();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -314,25 +275,67 @@ public class GymMembershipForm extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbTypeActionPerformed
 
 // ---------- Setup table columns and row-click listener ----------
-    private void setupTable() {
-        String[] columns = {"ID", "Name", "IC Number", "Type", "Start Date", "Rate (RM)", "Discount (%)", "Fee (RM)"};
-        DefaultTableModel tableModel = new javax.swing.table.DefaultTableModel(columns, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-         table.setModel(tableModel);
+private void setupTable() {
+    String[] columns = {"ID", "Name", "IC Number", "Type", "Start Date", "Rate (RM)", "Discount (%)", "Fee (RM)"};
+    tableModel = new javax.swing.table.DefaultTableModel(columns, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+    table.setModel(tableModel);
 
-    // Hide the ID column visually - staff sees Name first, but the
-    // system still tracks the ID internally for Update/Delete operations.
-          table.getColumnModel().getColumn(0).setMinWidth(0);
-          table.getColumnModel().getColumn(0).setMaxWidth(0);
-          table.getColumnModel().getColumn(0).setWidth(0);
+    table.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting() && table.getSelectedRow() != -1) {
+            int row = table.getSelectedRow();
+            selectedMemberID = (int) tableModel.getValueAt(row, 0);
+            txtName.setText((String) tableModel.getValueAt(row, 1));
+            txtIC.setText((String) tableModel.getValueAt(row, 2));
+            cmbType.setSelectedItem((String) tableModel.getValueAt(row, 3));
+            txtStartDate.setText((String) tableModel.getValueAt(row, 4));
+            txtRate.setText(String.valueOf(tableModel.getValueAt(row, 5)));
+            txtDiscount.setText(String.valueOf(tableModel.getValueAt(row, 6)));
+            txtDiscount.setEnabled("Yearly".equals(tableModel.getValueAt(row, 3)));
+            lblFee.setText("RM" + tableModel.getValueAt(row, 7));
+        }
+    });
+}
 
-          table.getSelectionModel().addListSelectionListener(e -> {
-        // baris lain kekal sama, tak berubah
-        
+// ---------- Auto-fill sensible defaults when the membership type changes ----------
+private void updateRateDefault() {
+    String type = (String) cmbType.getSelectedItem();
+    if ("Yearly".equals(type)) {
+        txtRate.setText("960.00");
+        txtDiscount.setText("15");
+        txtDiscount.setEnabled(true);
+    } else {
+        txtRate.setText("80.00");
+        txtDiscount.setText("0");
+        txtDiscount.setEnabled(false);
+    }
+}
+
+// ---------- Live fee preview as staff types the rate/discount ----------
+private void updateFeePreview() {
+    try {
+        double rate = Double.parseDouble(txtRate.getText().trim());
+        String type = (String) cmbType.getSelectedItem();
+
+        Membership preview;
+        if ("Yearly".equals(type)) {
+            double discount = txtDiscount.getText().trim().isEmpty()
+                    ? 0.0 : Double.parseDouble(txtDiscount.getText().trim());
+            preview = new YearlyMembership("", "", "", rate, discount);
+        } else {
+            preview = new MonthlyMembership("", "", "", rate);
+        }
+        lblFee.setText("RM" + String.format("%.2f", preview.calculateFee()));
+
+    } catch (NumberFormatException ex) {
+        lblFee.setText("RM0.00");
+    }
+}
+
 // ---------- Load all records from database into the JTable ----------
 private void loadTableData() {
     tableModel.setRowCount(0);
@@ -405,7 +408,7 @@ private Membership buildMembershipFromForm() {
 }
 
 // ---------- Clear the form ----------
-private void clearForm() {
+ private void clearForm() {
     txtName.setText("");
     txtIC.setText("");
     cmbType.setSelectedIndex(0);
