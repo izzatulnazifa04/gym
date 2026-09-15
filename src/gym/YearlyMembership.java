@@ -31,5 +31,14 @@ public class YearlyMembership extends Membership {
     public String getMembershipType() {
         return "Yearly";
     }
+
+    @Override
+    public double getDiscountPercent() {
+        return discountPercent;
+    }
+
+    public void setDiscountPercent(double discountPercent) {
+        this.discountPercent = discountPercent;
+    }
     
 }
