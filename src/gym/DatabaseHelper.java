@@ -22,3 +22,18 @@ public class DatabaseHelper {
                 + "rate REAL NOT NULL DEFAULT 80.0, "
                 + "discount REAL NOT NULL DEFAULT 0.0"
                 + ")";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println("Database initialization error: " + e.getMessage());
+        }
+    }
+
+    public static void initializeStaffTable() {
+        String createSql = "CREATE TABLE IF NOT EXISTS staff ("
+                + "staff_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "username TEXT NOT NULL UNIQUE, "
+                + "password TEXT NOT NULL"
+                + ")";
