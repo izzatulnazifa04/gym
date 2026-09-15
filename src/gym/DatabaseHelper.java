@@ -1,1 +1,2 @@
-//pakage gym
+pakge gym;
+    double matric;
