@@ -92,3 +92,8 @@ public class DatabaseHelper {
             return false;
         }
     }
+
+     // READ - retrieve all membership records, reconstructing rate/discount too.
+    public static List<Membership> getAllMemberships() {
+        List<Membership> list = new ArrayList<>();
+        String sql = "SELECT * FROM memberships ORDER BY member_id";
