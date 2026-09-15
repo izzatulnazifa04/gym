@@ -1,2 +1,2 @@
-pakge gym;
-    double matric;
+git add .
+git commit -m "Resolved merge conflict"
