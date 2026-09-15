@@ -97,3 +97,16 @@ public class DatabaseHelper {
     public static List<Membership> getAllMemberships() {
         List<Membership> list = new ArrayList<>();
         String sql = "SELECT * FROM memberships ORDER BY member_id";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                int id = rs.getInt("member_id");
+                String name = rs.getString("member_name");
+                String ic = rs.getString("ic_number");
+                String type = rs.getString("membership_type");
+                String startDate = rs.getString("start_date");
+                double rate = rs.getDouble("rate");
+                double discount = rs.getDouble("discount");
