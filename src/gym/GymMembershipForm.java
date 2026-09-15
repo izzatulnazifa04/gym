@@ -295,10 +295,10 @@ private void setupTable() {
             txtIC.setText((String) tableModel.getValueAt(row, 2));
             cmbType.setSelectedItem((String) tableModel.getValueAt(row, 3));
             txtStartDate.setText((String) tableModel.getValueAt(row, 4));
-            txtRate.setText(String.valueOf(tableModel.getValueAt(row, 5)));
-            txtDiscount.setText(String.valueOf(tableModel.getValueAt(row, 6)));
+            txtRate.setText(String.valueOf(tableModel.getValueAt(row, 6)));
+            txtDiscount.setText(String.valueOf(tableModel.getValueAt(row, 7)));
             txtDiscount.setEnabled("Yearly".equals(tableModel.getValueAt(row, 3)));
-            lblFee.setText("RM" + tableModel.getValueAt(row, 7));
+            lblFee.setText("RM" + tableModel.getValueAt(row, 8));
         }
     });
 }
@@ -350,9 +350,11 @@ private void loadTableData() {
             m.getIcNumber(),
             m.getMembershipType(),
             m.getStartDate(),
+            m.getEndDate(),
             String.format("%.2f", m.getRate()),
             String.format("%.2f", m.getDiscountPercent()),
             String.format("%.2f", m.calculateFee())
+            
         });
     }
 }
