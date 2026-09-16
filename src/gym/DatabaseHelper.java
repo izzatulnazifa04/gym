@@ -151,7 +151,7 @@ public class DatabaseHelper {
     // UPDATE - update an existing membership record by ID, including rate/discount.
     public static boolean updateMembership(Membership membership) {
         String sql = "UPDATE memberships SET member_name = ?, ic_number = ?, "
-                + "membership_type = ?, start_date = ?, rate = ?, discount = ? WHERE member_id = ?";
+                + "membership_type = ?, start_date = ?, rate = ?, discount = ?, end_date = ? + WHERE member_id = ?";
         
         try (Connection conn = DriverManager.getConnection(URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
