@@ -14,7 +14,7 @@ public abstract class Membership {
     private String endDate;   // format: yyyy-mm-dd
     protected double rate;      // base fee/rate entered by staff (RM)
     
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
 
     public Membership() {
