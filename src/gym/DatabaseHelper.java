@@ -162,7 +162,8 @@ public class DatabaseHelper {
             pstmt.setString(4, membership.getStartDate());
             pstmt.setDouble(5, membership.getRate());
             pstmt.setDouble(6, membership.getDiscountPercent());
-            pstmt.setInt(7, membership.getMemberID());
+            pstmt.setString(7, membership.getEndDate());
+            pstmt.setInt(8, membership.getMemberID());
             int rows = pstmt.executeUpdate();
             return rows > 0;
 
