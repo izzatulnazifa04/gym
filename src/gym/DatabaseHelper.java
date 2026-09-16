@@ -82,8 +82,8 @@ public class DatabaseHelper {
 
     // CREATE - insert a new membership record, including rate and discount.
     public static boolean addMembership(Membership membership) {
-        String sql = "INSERT INTO memberships (member_name, ic_number, membership_type, start_date, rate, discount) "
-                + "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO memberships (member_name, ic_number, membership_type, start_date, rate, discount, end_date) "
+           + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -94,6 +94,7 @@ public class DatabaseHelper {
             pstmt.setString(4, membership.getStartDate());
             pstmt.setDouble(5, membership.getRate());
             pstmt.setDouble(6, membership.getDiscountPercent());
+            pstmt.setString(7, membership.getEndDate());
             pstmt.executeUpdate();
             return true;
 
